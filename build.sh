@@ -15,6 +15,7 @@ if [[ "$ANDROID_NDK_HOME" == .* ]]; then
     exit 1
 fi
 
+export ANDROID_NDK_ROOT=$ANDROID_NDK_HOME
 export TOOLCHAIN=$ANDROID_NDK_HOME/toolchains/llvm/prebuilt/$HOST_TAG
 
 export CFLAGS="-Os"

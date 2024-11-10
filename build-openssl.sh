@@ -20,6 +20,13 @@ export STRIP=$TOOLCHAIN/bin/llvm-strip
 export TARGET_HOST=(aarch64-linux-android armv7a-linux-androideabi x86_64-linux-android i686-linux-android)
 export ANDROID_ARCH=(arm64-v8a armeabi-v7a x86_64 x86)
 export OPENSSL_TARGET_HOST=(android-arm64 android-arm android-x86_64 android-x86)
+
+# Apply patch that fixes the armcap instruction
+# Linux version
+sed -e '/[.]hidden.*OPENSSL_armcap_P/d; /[.]extern.*OPENSSL_armcap_P/ {p; s/extern/hidden/ }' -i -- crypto/*arm*pl crypto/*/asm/*arm*pl
+# macOS version
+# sed -E -i '' -e '/[.]hidden.*OPENSSL_armcap_P/d' -e '/[.]extern.*OPENSSL_armcap_P/ {p; s/extern/hidden/; }' crypto/*arm*pl crypto/*/asm/*arm*pl
+
 index=0
 
 for target in ${TARGET_HOST[*]}; do
